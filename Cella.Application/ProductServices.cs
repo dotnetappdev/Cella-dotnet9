@@ -8,9 +8,10 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using Cella.Domain;
 using Microsoft.AspNetCore.Http;
+using Cella.Application.Interfaces;
 namespace Cella.Application
 {
-    public class ProductServices
+    public class ProductServices : IProductInterface
     {
         private readonly IHttpContextAccessor httpContextAccessor;
 
@@ -25,7 +26,7 @@ namespace Cella.Application
         public async void AddProduct(Product product)
         {
             context.Product.Add(product);
-            await context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
 

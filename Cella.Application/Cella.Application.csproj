@@ -1,0 +1,40 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Interfaces\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Cella.Domain\Cella.Domain.csproj" />
+    <ProjectReference Include="..\Cella.Models\Cella.Models.csproj" />
+  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="AutoMapper" Version="14.0.0" />
+		<PackageReference Include="CsvHelper" Version="33.0.1" />
+		<PackageReference Include="Dapper" Version="2.1.66" />
+		<PackageReference Include="Dapper.Contrib" Version="2.0.78" />
+		<PackageReference Include="LocalStorage" Version="2.1.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="9.0.2" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="9.0.2" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="9.0.2" />
+		<PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="9.0.2" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.2" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="9.0.2" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.2" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.2">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.Extensions.Localization.Abstractions" Version="9.0.2" />
+		<PackageReference Include="NETStandard.Library" Version="2.0.3" />
+		<PackageReference Include="RestSharp" Version="112.1.1-alpha.0.4" />
+		<PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
+		<PackageReference Include="System.DirectoryServices" Version="9.0.2" />
+	</ItemGroup>
+</Project>

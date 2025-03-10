@@ -15,22 +15,22 @@ namespace Cella.Application
     {
         private readonly IHttpContextAccessor httpContextAccessor;
 
-        CellaDBContext context { get; set; }
-        public ProductServices(CellaDBContext _context, IHttpContextAccessor _httpContextAccessor) { 
+        ApplicationDbContext context { get; set; }
+        public ProductServices(ApplicationDbContext _context, IHttpContextAccessor _httpContextAccessor) { 
         
             context = _context;            
             httpContextAccessor = _httpContextAccessor;
 
         }
 
-        public async void AddProduct(Product product)
+        public async void AddProduct(Stock product)
         {
             context.Product.Add(product);
             await context.SaveChangesAsync();
         }
 
 
-        public async void UpdateProduct(Product product)
+        public async void UpdateProduct(Stock product)
         {
 
               var productToUpdate = await context.Product.FindAsync(product.Id); // Fetch the entity
@@ -43,7 +43,7 @@ namespace Cella.Application
 
 
         }
-        public async void DeleteProductAsync(Product product)
+        public async void DeleteProductAsync(Stock product)
         {
             var userName = httpContextAccessor.HttpContext?.User?.Identity?.Name ?? "System"; // Get logged-in user
 

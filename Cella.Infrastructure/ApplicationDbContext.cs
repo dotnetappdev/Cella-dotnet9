@@ -7,59 +7,31 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using Dapper;
-using Dapper.Contrib;
-using SQLitePCL;
-using SQLite;
+
 using System.IO;
-using AutoMapper;
+ 
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Threading.Tasks;
 using System.Security.Claims;
-using Cella.Models;
-using Cella.Models.Permissions;
-using Cella.Domain.Configuration;
-using Cella.Models.ViewModels;
+ 
 
 using System.Threading;
+using Cella.Models;
+using Cella.Domain.Configuration;
 using Cella.Domain.Localization;
 
-namespace Cella.Domain
+namespace Cella.Infrastructure
 {
-    public class CellaDBContext : IdentityDbContext<ApplicationUser>
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
 
-        public CellaDBContext(DbContextOptions<CellaDBContext> options)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
           : base(options)
         {
 
         }
 
-         public async void AddPluginModulesToDB()
-        {
-
-            foreach (var module in AppConfig.Modules)
-            {
-
-                PluginList plugin = new PluginList();
-                bool existingPlugin = this.Plugins.Any(w => w.ModuleId == module.Id);
-                if (!existingPlugin)
-                {
-
-                    plugin.ModuleId = module.Id;
-                    plugin.Version = module.Version.ToString();
-                    plugin.Type = module.Type;
-                    plugin.Name = module.Name;
-                    plugin.Order = module.Order;
-                    plugin.isEnabled = module.isEnabled;
-                    plugin.IsBundledWithHost = module.IsBundledWithHost;
-                    plugin.Thumbnail = module.Thumbnail;
-
-                    this.Plugins.Add(plugin);
-                }
-                }
-                await this.SaveChangesAsync();
-            }
+        
         public DbSet<AppSettings> Appsettings { get; set; }
 
         public DbSet<Company> Companies { get; set; }
@@ -67,10 +39,9 @@ namespace Cella.Domain
         public DbSet<Stores> Stores { get; set; }
 
 
-        public DbSet<ThemeListItem> ThemeSetup { get; set; }
-        public DbSet<CellaAuditTrail> CellaAuditTrail { get; set; }
+         public DbSet<CellaAuditTrail> CellaAuditTrail { get; set; }
 
-        public DbSet<Product> Product { get; set; }
+        public DbSet<Stock> Product { get; set; }
 
 
         public DbSet<SystemSetup> SystemSetup { get; set; }
@@ -101,8 +72,7 @@ namespace Cella.Domain
         public DbSet<CustomFieldsDataTypes> CustomFieldsDataTypes { get; set; }
 
         public DbSet<SalesOrder> SalesOrders { get; set; }
-        public DbSet<CellaUserPermmissions> CellaUserPermmissions { get; set; }
-        public DbSet<SalesOrderItem> SalesOrderItems { get; set; }
+         public DbSet<SalesOrderItem> SalesOrderItems { get; set; }
 
         public DbSet<ShoppingCart> ShoppingCarts { get; set; }
         public DbSet<Categories> Categories { get; set; }

@@ -15,7 +15,7 @@ namespace Cella.Models {
         public List<CellaUserPermmissions> UserPermissions { get; set; }
 
        
-        public List<Product> StockItems { get; set; }
+        public List<Stock> StockItems { get; set; }
 
     }
 }

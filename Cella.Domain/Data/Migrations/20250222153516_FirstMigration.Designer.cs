@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Cella.Domain.Data.Migrations
 {
-    [DbContext(typeof(CellaDBContext))]
+    [DbContext(typeof(ApplicationDbContext))]
     [Migration("20250222153516_FirstMigration")]
     partial class FirstMigration
     {

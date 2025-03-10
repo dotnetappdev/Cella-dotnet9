@@ -8,7 +8,7 @@ using System.Text;
 
 namespace Cella.Models
 {
-    public class Product
+    public class Stock
     {
 
         public int Id { get; set; }

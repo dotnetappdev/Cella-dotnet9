@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Cella.Domain.Data.Migrations
 {
-    [DbContext(typeof(CellaDBContext))]
+    [DbContext(typeof(ApplicationDbContext))]
     partial class CellaDBContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

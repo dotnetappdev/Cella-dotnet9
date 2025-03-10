@@ -7,37 +7,32 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="WarehouseCrmApiCoreClient.xaml" />
-  </ItemGroup>
+	  <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.2" />
+	  <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.2">
+		  <PrivateAssets>all</PrivateAssets>
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+	  </PackageReference>
+	  <PackageReference Include="Scalar.AspNetCore" Version="2.0.21" />
+	  <PackageReference Include="Serilog.Settings.Configuration" Version="9.0.0" />
+	  <PackageReference Include="Swashbuckle.AspNetCore" Version="7.3.1" />
+	  <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="7.3.1" />
+	  <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="9.0.2" />
+	  <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="9.0.2" />
+	  <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="9.0.2" />
+	  <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="9.0.2" />
+	  <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.2" />
+	  <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="9.0.2" />
+	  <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.2" />
+	  <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.2" />
+	  <PackageReference Include="Serilog" Version="4.2.0" />
+	  <PackageReference Include="Serilog.AspNetCore" Version="9.0.0" />
+	  <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
+	  <PackageReference Include="Serilog.Sinks.File" Version="6.0.0" />
 
-  <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="14.0.0" />
-    <PackageReference Include="CsvHelper" Version="33.0.1" />
-    <PackageReference Include="Dapper" Version="2.1.66" />
-    <PackageReference Include="Dapper.Contrib" Version="2.0.78" />
-    <PackageReference Include="LocalStorage" Version="2.1.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="9.0.2" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="9.0.2" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="9.0.2" />
-    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="9.0.2" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.2" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="9.0.2" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.2" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.2">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="Microsoft.Extensions.Localization.Abstractions" Version="9.0.2" />
-    <PackageReference Include="NETStandard.Library" Version="2.0.3" />
-    <PackageReference Include="RestSharp" Version="112.1.1-alpha.0.4" />
-    <PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
-    <PackageReference Include="System.DirectoryServices" Version="9.0.2" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Page Include="WarehouseCrmApiCoreClient.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
+	  <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.2">
+		  <PrivateAssets>all</PrivateAssets>
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+	  </PackageReference>
   </ItemGroup>
 
   <ItemGroup>

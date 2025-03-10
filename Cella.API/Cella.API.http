@@ -1,0 +1,6 @@
+@Cella.API_HostAddress = http://localhost:5183
+
+GET {{Cella.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -19,10 +19,10 @@ namespace Cella.Domain.Configuration
  
         public override void Load()
         {
-            var builder = new DbContextOptionsBuilder<CellaDBContext>();
+            var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
             OptionsAction(builder);
 
-            using (var dbContext = new CellaDBContext(builder.Options))
+            using (var dbContext = new ApplicationDbContext(builder.Options))
             {
                 dbContext.Database.EnsureCreated();
                 Data = !dbContext.Appsettings.Any()
@@ -31,7 +31,7 @@ namespace Cella.Domain.Configuration
             }
         }
 
-        private static IDictionary<string, string> CreateAndSaveDefaultValues(CellaDBContext dbContext)
+        private static IDictionary<string, string> CreateAndSaveDefaultValues(ApplicationDbContext dbContext)
         {
             var configValues =
                 new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)

@@ -17,7 +17,7 @@ namespace Cella.Domain.Interfaces
 
         public DbSet<CellaAuditTrail> CellaAuditTrail { get; set; }
 
-        public DbSet<Product> StockItems { get; set; }
+        public DbSet<Stock> StockItems { get; set; }
 
 
         public DbSet<SystemSetup> SystemSetup { get; set; }

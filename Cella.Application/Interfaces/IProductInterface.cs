@@ -9,11 +9,11 @@ namespace Cella.Application.Interfaces
 {
     public  interface IProductInterface
     {
-       public void AddProduct(Product product);
+       public void AddProduct(Stock product);
 
-        public void UpdateProduct(Product product);
+        public void UpdateProduct(Stock product);
 
-       public  void DeleteProductAsync(Product product);
+       public  void DeleteProductAsync(Stock product);
 
     }
 }

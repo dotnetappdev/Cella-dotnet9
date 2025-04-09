@@ -20,7 +20,7 @@ namespace Cella.API
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
-                c.RoutePrefix = "api"; // Set the Swagger UI to be served at /api
+              //  c.RoutePrefix = "api"; // Set the Swagger UI to be served at /api
             });
 
         }

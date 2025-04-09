@@ -7,7 +7,7 @@ namespace Cella.Models.ViewModels
     public class ProductListingsViewModel
     {
         public List<Categories> Categories { get; set; }
-        public List<Stock> Products { get; set; }
+        public List<StockItem> Products { get; set; }
 
         public string? Price { get; set; }
     }

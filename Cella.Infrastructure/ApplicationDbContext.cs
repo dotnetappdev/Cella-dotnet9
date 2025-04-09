@@ -17,7 +17,6 @@ using System.Security.Claims;
 
 using System.Threading;
 using Cella.Models;
-using Cella.Domain.Configuration;
 using Cella.Domain.Localization;
 
 namespace Cella.Infrastructure
@@ -32,7 +31,6 @@ namespace Cella.Infrastructure
         }
 
         
-        public DbSet<AppSettings> Appsettings { get; set; }
 
         public DbSet<Company> Companies { get; set; }
 
@@ -41,7 +39,7 @@ namespace Cella.Infrastructure
 
          public DbSet<CellaAuditTrail> CellaAuditTrail { get; set; }
 
-        public DbSet<Stock> Product { get; set; }
+        public DbSet<StockItem> StockItems { get; set; }
 
 
         public DbSet<SystemSetup> SystemSetup { get; set; }

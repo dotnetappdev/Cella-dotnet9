@@ -4,6 +4,13 @@ using Microsoft.AspNetCore.Identity;
 using Cella.Domain;
 using Microsoft.EntityFrameworkCore;
 using Cella.Models;
+using Cella.Infrastructure;
+using Cella.Domain.Interfaces;
+using System;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+
 
 
 namespace Cella.API
@@ -11,38 +18,56 @@ namespace Cella.API
     public static class ServiceRegistrationExtensions
     {
         // Register DbContext and Identity with SQL Server
-        public static void AddApplicationServices(this IServiceCollection services, IConfiguration configuration)
+        public static void AddApplicationServices(this IServiceCollection services,string connectionstring)
         {
             // Register ApplicationDbContext with SQL Server
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(connectionstring));
 
-            // Register Identity services with ApplicationDbContext
-            //services.AddIdentity<ApplicationUser, IdentityRole>()
-            //    .AddEntityFrameworkStores<ApplicationDbContext>()
-            //    .AddDefaultTokenProviders();
-            
             services.AddIdentityApiEndpoints<ApplicationUser>()
-    .AddEntityFrameworkStores<ApplicationDbContext>();
-            // Additional application-level services, e.g., email service, caching, etc.
-           services.AddEndpointsApiExplorer();
+           .AddRoles<IdentityRole>()
+           .AddEntityFrameworkStores<ApplicationDbContext>();
+
+               services.AddEndpointsApiExplorer();
 
         }
 
         // Register custom application services (e.g., business logic services)
         public static void AddBusinessServices(this IServiceCollection services)
         {
- 
+            services.AddTransient<IStockInterface, StockService>();
+
 
         }
 
         // Register other services like controllers, health checks, etc.
-        public static void AddControllerServices(this IServiceCollection services)
+        public static void AddControllerServices(this IServiceCollection services, AppSettings appSettings)
         {
             services.AddControllers();
             services.AddOpenApi();
 
             services.AddSwaggerGen(); // Swagger registration (optional)
+
+            var jwtSettings = appSettings.ConnectionStrings.FirstOrDefault();
+            var key = Encoding.ASCII.GetBytes(appSettings.JwtSecret);
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = appSettings.Issuer,
+                    ValidAudience = appSettings.Audience,
+                    IssuerSigningKey = new SymmetricSecurityKey(key)
+                };
+            });
         }
 
         // Register application-specific middlewares (optional)

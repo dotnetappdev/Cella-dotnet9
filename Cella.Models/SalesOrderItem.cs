@@ -12,7 +12,7 @@ namespace Cella.Models {
         public Guid? StoreId { get; set; }
 
         public Guid? UserId { get; set; }
-        public Stock? StockItem { get; set; }
+        public StockItem? StockItem { get; set; }
        [StringLength(50)]
         public string? StockCode { get; set; }
        [StringLength(500)]

@@ -4,17 +4,20 @@ using System.Text;
 
 namespace Cella.Models
 {
-    public class ApplicationSettings
+    public class AppSettings
     {
+        public string JwtSecret { get; set; } = string.Empty;
 
-
-        public string Secret { get; set; }
-    public string ConnectionStrings { get; set; }
-    public string Store { get; set; }
-      public string AllowedHosts { get; set; }
-
-    public string ApiKey { get; set; }
-    public string Theme { get; set; }
-}
+        public string BaseAddress { get; set; }
+        public string Issuer { get; set; } = string.Empty;
+        public string Audience { get; set; } = string.Empty;
+        public int ExpirationInMinutes { get; set; } = 0;
+        public Dictionary<string, string> ConnectionStrings { get; set; } = new();
+  
+      public string GetDefaultConnection()
+        {
+            return this.ConnectionStrings["DefaultConnection"];
+        }
+    }
 
 }

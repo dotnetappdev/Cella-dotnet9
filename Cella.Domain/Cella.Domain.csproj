@@ -36,12 +36,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Cella.Models\Cella.Models.csproj" />
+    <Folder Include="Configuration\" />
+    <Folder Include="Extensions\" />
+    <Folder Include="Interfaces\" />
+    <Folder Include="Services\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Data\" />
-    <Folder Include="Extensions\" />
+    <ProjectReference Include="..\Cella.Models\Cella.Models.csproj" />
   </ItemGroup>
 
 </Project>

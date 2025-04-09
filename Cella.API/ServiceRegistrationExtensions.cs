@@ -45,8 +45,41 @@ namespace Cella.API
         {
             services.AddControllers();
             services.AddOpenApi();
+            // Add Swagger with Bearer token support
+            services.AddSwaggerGen(options =>
+            {
 
-            services.AddSwaggerGen(); // Swagger registration (optional)
+                options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+                {
+                    Title = "Cella API",
+                    Version = "v1"
+                });
+
+                options.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+                {
+                    In = Microsoft.OpenApi.Models.ParameterLocation.Header,
+                    Description = "Enter Bearer token in the format 'Bearer {token}'",
+                    Name = "Authorization",
+                    Type = Microsoft.OpenApi.Models.SecuritySchemeType.Http,
+                    Scheme = "bearer"
+                });
+
+                options.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement
+    {
+        {
+            new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+            {
+                Reference = new Microsoft.OpenApi.Models.OpenApiReference
+                {
+                    Type = Microsoft.OpenApi.Models.ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            new string[] {}
+        }
+    });
+            });
+
 
             var jwtSettings = appSettings.ConnectionStrings.FirstOrDefault();
             var key = Encoding.ASCII.GetBytes(appSettings.JwtSecret);

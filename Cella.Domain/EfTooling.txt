@@ -9,3 +9,4 @@ cd techdemo.Infrastructure
 dotnet ef database update  
 
 
+https://cella-api.dotnetappdevni.com/api/index.html

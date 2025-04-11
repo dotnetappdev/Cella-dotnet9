@@ -1,6 +1,10 @@
-﻿@implements IDisposable
-
+﻿
+@implements IDisposable
+@using Cella.Models
+@using Microsoft.AspNetCore.Identity
 @inject NavigationManager NavigationManager
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject SignInManager<ApplicationUser> SignInManager
 
 <div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
@@ -35,6 +39,12 @@
                 <span class="bi bi-lock-nav-menu" aria-hidden="true"></span> Auth Required
             </NavLink>
         </div>
+        
+        <AuthorizeView>
+            <Authorized>
+
+               </Authorized>
+               </AuthorizeView>
 
         <AuthorizeView>
             <Authorized>
@@ -44,7 +54,19 @@
                     </NavLink>
                 </div>
                 <div class="nav-item px-3">
-                    <form action="Account/Logout" method="post">
+                    Admin
+                    <div class="nav-item px-3">
+                        <NavLink class="nav-link" href="/admin/stock">
+                            <span class="bi bi-person-nav-menu" aria-hidden="true"></span> Stock Listings
+                        </NavLink>
+                        <div class="nav-item px-3">
+                            <NavLink class="nav-link" href="/admin/stock/add">
+                                <span class="bi bi-person-nav-menu" aria-hidden="true"></span> Add Stock
+                            </NavLink>
+                        </div>
+                    </div>
+
+                    <form action="Account/Logout" method="post" @onsubmit="Logout">
                         <AntiforgeryToken />
                         <input type="hidden" name="ReturnUrl" value="@currentUrl" />
                         <button type="submit" class="nav-link">
@@ -71,11 +93,26 @@
 
 @code {
     private string? currentUrl;
+    private AuthenticationState? currentAuthState;
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
+        // Initialize the current authentication state
+        currentAuthState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
         currentUrl = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
         NavigationManager.LocationChanged += OnLocationChanged;
+    }
+
+    private async Task Logout()
+    {
+        // Call SignOutAsync to log the user out
+        await SignInManager.SignOutAsync();
+
+        // Force a state update to reflect changes after logout
+        StateHasChanged();
+
+        // Navigate to home or login page after logout
+        NavigationManager.NavigateTo("/");
     }
 
     private void OnLocationChanged(object? sender, LocationChangedEventArgs e)
@@ -89,4 +126,3 @@
         NavigationManager.LocationChanged -= OnLocationChanged;
     }
 }
-

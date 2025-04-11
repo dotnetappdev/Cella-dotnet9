@@ -21,7 +21,7 @@ using Cella.Domain.Localization;
 
 namespace Cella.Infrastructure
 {
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
     {
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
@@ -29,9 +29,12 @@ namespace Cella.Infrastructure
         {
 
         }
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
 
-        
+        public DbSet<ApplicationRole> ApplicationRoles { get; set; }
 
+        public DbSet<Bom> Bom { get; set; }
+        public DbSet<BomLineItem> BomLineItems { get; set; }
         public DbSet<Company> Companies { get; set; }
 
         public DbSet<Stores> Stores { get; set; }
@@ -62,7 +65,6 @@ namespace Cella.Infrastructure
 
         public DbSet<StaffMembers> StaffMember { get; set; }
 
-        public virtual ICollection<ApplicationUser> ApplicationUsers { get; set; }
 
 
         public DbSet<CustomFieldsForModels> CustomFields { get; set; }

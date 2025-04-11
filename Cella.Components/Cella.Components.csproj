@@ -16,9 +16,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Account\Stock\" />
+    <Folder Include="Account\" />
     <Folder Include="Areas\Manage\" />
     <Folder Include="Pages\NewFolder\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MudBlazor" Version="8.5.1" />
   </ItemGroup>
 
 

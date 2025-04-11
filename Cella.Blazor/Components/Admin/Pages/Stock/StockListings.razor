@@ -1,0 +1,52 @@
+﻿@page "/admin/stock"
+@using System.Net.Http.Json
+@using MudBlazor
+@inject HttpClient httpClient
+@inject NavigationManager NavigationManager
+
+<h3>StockListings</h3>
+<MudButton Variant="Variant.Filled" Color="Color.Secondary" OnClick="NavigateToAddPage">Add Stock</MudButton>
+<MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@ToggleOpen">Add Stock</MudButton>
+
+
+<MudPopover Open="@_open" Class="px-4 pt-4" Style="width: 300px; height: 300px;">
+    <div class="d-flex flex-column">
+        <MudText>Content of the popover can be anything.</MudText>
+        <MudTextField T="string" Text="Lorem ipsum dolor" Label="Typo.subtitle1" Typo="Typo.subtitle1"></MudTextField>
+        <MudTextField T="string" Text="Lorem ipsum dolor" Label="Typo.caption" Typo="Typo.caption"></MudTextField>
+        <MudTextField T="string" Text="Lorem ipsum dolor" Label="Typo.h5" Typo="Typo.h5"></MudTextField>
+        <MudButton OnClick="@Save" Class="ml-auto mr-n3 mb-1" Color="Color.Error">Save</MudButton>
+
+        <MudButton OnClick="@CloseWindow" Class="ml-auto mr-n3 mb-1" Color="Color.Error">Close</MudButton>
+    </div>
+</MudPopover>
+
+@code {
+    private bool _open;
+
+
+}
+@code {
+    // Toggle the state of the popover
+    private void ToggleOpen()
+    {
+        _open = !_open;
+    }
+    private void CloseWindow()
+    {
+        _open = false;
+    }
+    private void Save()
+    {
+        CloseWindow();
+    }
+    private void NavigateToAddPage()
+    {
+     
+        // Log to console for debugging
+        Console.WriteLine("Navigating to /admin/stock/add");
+
+        // Navigating to the add stock page
+        NavigationManager.NavigateTo("/admin/stock/add");
+    }
+}

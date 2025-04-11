@@ -10,18 +10,20 @@ namespace Cella.Models {
 
         public Guid? StoreId { get; set; }
         public Guid? UserId { get; set; }
+
+        public int? SalesOrderId { get; set; }
         public StockItem StockItem { get; set; }
        [StringLength(50)]
         public string StockCode { get; set; }
        [StringLength(500)]
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
-        public bool ScannedOn { get; set; }
-        public int Qty { get; set; }
+        public bool? ScannedOn { get; set; }
+        public int? Qty { get; set; }
 
-        public decimal LinePrice { get; set;  }
+        public decimal? LinePrice { get; set;  }
         [StringLength(10)]
-        public string Currency { get; set; }
+        public string? Currency { get; set; }
 
        public DateTime? OrderDate { get; set; }
        public DateTime? CreateDate { get; set; }
@@ -29,12 +31,12 @@ namespace Cella.Models {
        [StringLength(30)]
        public string? CreatedBy { get; set; }
 
-        public DateTime DeliveryDate { get; set; }
-        public virtual Photos DeliveryEvidence { get; set; }
+        public DateTime? DeliveryDate { get; set; }
+        public virtual Photos? DeliveryEvidence { get; set; }
 
-        public bool isActive { get; set; }
+        public bool? isActive { get; set; }
 
-       public bool isDeleted { get; set; }
+       public bool? isDeleted { get; set; }
 
 
     }

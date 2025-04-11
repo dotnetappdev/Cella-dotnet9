@@ -18,6 +18,7 @@ namespace Cella.Models
 
         }
         public int Id { get; set; }
+        public int? SalesOrderId { get; set; }
 
         public string SessionId { get; set; }
 

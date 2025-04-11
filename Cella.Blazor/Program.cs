@@ -6,19 +6,25 @@ using Cella.Blazor.Components.Account;
 using Cella.Infrastructure;
 using Cella.Models;
 using Cella.Domain;
+using MudBlazor.Services;
 
 namespace Cella.Blazor;
 
 public class Program
 {
-    public static void Main(string[] args)
+    public static async Task Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
         var configuration = builder.Configuration;
         // Add services to the container.
         builder.Services.AddRazorComponents()
             .AddInteractiveServerComponents();
-        
+
+        builder.Services.Configure<AppSettings>(configuration.GetSection("AppSettings"));
+
+
+        builder.Services.AddMudServices();
+
         builder.Services.AddCascadingAuthenticationState();
         builder.Services.AddScoped<IdentityUserAccessor>();
         builder.Services.AddScoped<IdentityRedirectManager>();
@@ -34,12 +40,14 @@ public class Program
             })
             .AddIdentityCookies();
 
-        var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+        var connectionString = appSettings.GetDefaultConnection() ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
         builder.Services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(connectionString));
         builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-
-        builder.Services.AddIdentityCore<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+  
+        builder.Services.AddIdentityCore<ApplicationUser>(options =>
+            options.SignIn.RequireConfirmedAccount = false)
+            .AddRoles<ApplicationRole>() // Add Role support
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddSignInManager()
             .AddDefaultTokenProviders();
@@ -68,6 +76,13 @@ public class Program
         app.MapStaticAssets();
         app.MapRazorComponents<App>()
             .AddInteractiveServerRenderMode();
+
+        using (var scope = app.Services.CreateScope())
+        {
+            var services = scope.ServiceProvider;
+            await SeedData.SeedUsersAndRoles(services);
+        }
+
 
         // Add additional endpoints required by the Identity /Account Razor components.
         app.MapAdditionalIdentityEndpoints();

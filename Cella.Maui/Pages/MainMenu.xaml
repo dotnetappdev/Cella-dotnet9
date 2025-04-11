@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:SF="clr-namespace:Syncfusion.Maui.Buttons;assembly=Syncfusion.Maui.Buttons"
+             x:Class="Cella.Maui.Pages.MainMenu"
+             Title="Home">
+
+
+    <Grid
+    Padding="20"
+    RowSpacing="5"
+    ColumnSpacing="10"
+    RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto"
+   ColumnDefinitions="*,*,*">
+
+
+        <!-- Row 0 -->
+        <SF:SfButton x:Name="btnStockListings" ShowIcon="True" ImageSource="warehouse.png" ImageSize="64"   ImageAlignment="Top" Clicked="btnStockListings_Clicked"  Text="Stock" WidthRequest="200" HeightRequest="100" HorizontalOptions="Center" BackgroundColor="DodgerBlue"
+      CornerRadius="10" Grid.Row="0" Grid.Column="0" />
+        <SF:SfButton   Text="Orders" ShowIcon="True" ImageSource="orders.png" ImageAlignment="Top" ImageSize="64" WidthRequest="200"  HeightRequest="100"  HorizontalOptions="Center"   BackgroundColor="DodgerBlue"
+       CornerRadius="10" Grid.Row="0" Grid.Column="1" />
+
+
+        <!-- Row 1 -->
+        <SF:SfButton Text="Pick Lists" WidthRequest="200" HeightRequest="60" HorizontalOptions="Center"  BackgroundColor="DodgerBlue"
+        CornerRadius="10" Grid.Row="1" Grid.Column="0" />
+
+        <SF:SfButton Text="Scanning" WidthRequest="200" HeightRequest="60" HorizontalOptions="Center" BackgroundColor="DodgerBlue"
+       CornerRadius="10" Grid.Row="1" Grid.Column="1" />
+
+        <!-- Row 2 -->
+        <SF:SfButton Text="Stock Check" WidthRequest="200" HeightRequest="60" HorizontalOptions="Center"  BackgroundColor="DodgerBlue"
+       CornerRadius="10" Grid.Row="2" Grid.Column="0" />
+
+        <SF:SfButton Text="Staff" WidthRequest="200" HeightRequest="60" HorizontalOptions="Center" BackgroundColor="DodgerBlue"
+CornerRadius="10" Grid.Row="2" Grid.Column="1" />
+
+
+
+
+        <SF:SfButton Text="Drivers Assignment"  WidthRequest="200" HeightRequest="60" HorizontalOptions="Center" BackgroundColor="DodgerBlue"
+  CornerRadius="10" Grid.Row="3" Grid.Column="0" />
+
+        <SF:SfButton Text="Drivers App" WidthRequest="200" HeightRequest="60" HorizontalOptions="Center"  BackgroundColor="DodgerBlue"
+ CornerRadius="10" Grid.Row="3" Grid.Column="1" />
+
+
+        <SF:SfButton Text="Drivers Routes"  WidthRequest="200" HeightRequest="60" HorizontalOptions="Center" BackgroundColor="DodgerBlue"
+  CornerRadius="10" Grid.Row="4" Grid.Column="0" />
+        <SF:SfButton Text="Customers"  WidthRequest="200" HeightRequest="60" HorizontalOptions="Center" BackgroundColor="DodgerBlue"
+CornerRadius="10" Grid.Row="4" Grid.Column="1" />
+
+        <SF:SfButton Text="Drivers Progress"  WidthRequest="200" HeightRequest="60" HorizontalOptions="Center" BackgroundColor="DodgerBlue"
+CornerRadius="10" Grid.Row="5" Grid.Column="0" />
+
+        <SF:SfButton Text="Warehouse Locations / Bins"  WidthRequest="200" HeightRequest="60" HorizontalOptions="Center" BackgroundColor="DodgerBlue"
+CornerRadius="10" Grid.Row="5" Grid.Column="0" />
+    </Grid>
+</ContentPage>

@@ -17,13 +17,13 @@ namespace Cella.Models
         {
 
             Goods = 1,
-            FoodItem=2,
-            Toppings=3,
+            FoodItem = 2,
+            Toppings = 3,
             Digital = 4,
             DownLoad = 5,
             Voucher = 6,
             GitfCard = 7
-            
+
         }
 
 
@@ -38,9 +38,10 @@ namespace Cella.Models
 
         [StringLength(60)]
         public string? BarCode { get; set; }
-          [StringLength(2000)]
+        
+        [StringLength(2000)]
         public string? ShortDescription { get; set; }
-
+        public string? Description { get; set; }
         public string? Price { get; set; }
         [StringLength(5000)]
         public string? Name { get; set; }
@@ -80,7 +81,7 @@ namespace Cella.Models
         public string? SKU { get; set; }
 
 
-        public  bool? isFeatured { get; set; }
+        public bool? isFeatured { get; set; }
         public bool? isBackOrder { get; set; }
         public DateTime? CreateDate { get; set; }
         public DateTime? LastModifiedDate { get; set; }

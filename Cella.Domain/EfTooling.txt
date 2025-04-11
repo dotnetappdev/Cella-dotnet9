@@ -1,9 +1,9 @@
 ﻿ 
 
-dotnet ef migrations add firstMigrations1 --output-dir Data/Migrations --context ApplicationDbContext
+dotnet ef migrations add firstMigrations3 --output-dir Data/Migrations --context ApplicationDbContext
 
 default project   techdemo.Infrastructure
-cd techdemo.Infrastructure
+cd Cella.Infrastructure
 
  than one DbContext was found. Specify which one to use. Use the '-Context' parameter for PowerShell commands and the '--context' parameter for dotnet commands.
 dotnet ef database update  

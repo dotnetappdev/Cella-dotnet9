@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Cella.Maui.Pages.Stock.StockListings"
+             Title="Stock Listings">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem x:Name="tbAdd" Text="Add Stock" />
+
+    </ContentPage.ToolbarItems>
+
+    <ScrollView>
+        <Grid Padding="20" RowSpacing="10" ColumnSpacing="10">
+            <!-- Define Grid Columns -->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="150" />
+                <!-- For Labels -->
+                <ColumnDefinition Width="*" />
+                <!-- For Controls -->
+            </Grid.ColumnDefinitions>
+
+            <!-- Stock Code -->
+            <Label Text="Stock Code" VerticalOptions="Center" Grid.Row="0" Grid.Column="0" />
+            <Entry x:Name="txtStockCode" HorizontalOptions="FillAndExpand" Grid.Row="0" Grid.Column="1" />
+
+            <!-- Barcode -->
+            <Label Text="Barcode" VerticalOptions="Center" Grid.Row="1" Grid.Column="0" />
+            <Entry x:Name="txtBarCode" HorizontalOptions="FillAndExpand" Grid.Row="1" Grid.Column="1" />
+
+            <!-- Short Description -->
+            <Label Text="Short Description" VerticalOptions="Center" Grid.Row="2" Grid.Column="0" />
+            <Entry x:Name="txtShortDescription" HorizontalOptions="FillAndExpand" Grid.Row="2" Grid.Column="1" />
+
+            <!-- Price -->
+            <Label Text="Price" VerticalOptions="Center" Grid.Row="3" Grid.Column="0" />
+            <Entry x:Name="txtPrice" Keyboard="Numeric" HorizontalOptions="FillAndExpand" Grid.Row="3" Grid.Column="1" />
+
+            <!-- Item Name -->
+            <Label Text="Item Name" VerticalOptions="Center" Grid.Row="4" Grid.Column="0" />
+            <Entry x:Name="txtName" HorizontalOptions="FillAndExpand" Grid.Row="4" Grid.Column="1" />
+
+            <!-- Full Description -->
+            <Label Text="Full Description" VerticalOptions="Center" Grid.Row="5" Grid.Column="0" />
+            <Editor x:Name="txtFullDescription" HeightRequest="100" HorizontalOptions="FillAndExpand" Grid.Row="5" Grid.Column="1" />
+
+            <!-- Categories -->
+            <Label Text="Categories" VerticalOptions="Center" Grid.Row="6" Grid.Column="0" />
+            <Entry x:Name="txtCategories" Keyboard="Numeric" HorizontalOptions="FillAndExpand" Grid.Row="6" Grid.Column="1" />
+
+            <!-- Manufacturers -->
+            <Label Text="Manufacturer" VerticalOptions="Center" Grid.Row="7" Grid.Column="0" />
+            <Entry x:Name="txtManufactures" HorizontalOptions="FillAndExpand" Grid.Row="7" Grid.Column="1" />
+
+            <!-- Available Start Date -->
+            <Label Text="Available Start Date" VerticalOptions="Center" Grid.Row="8" Grid.Column="0" />
+            <DatePicker x:Name="dpAvailableStartDate" HorizontalOptions="FillAndExpand" Grid.Row="8" Grid.Column="1" />
+
+            <!-- Available End Date -->
+            <Label Text="Available End Date" VerticalOptions="Center" Grid.Row="9" Grid.Column="0" />
+            <DatePicker x:Name="dpAvailableEndDate" HorizontalOptions="FillAndExpand" Grid.Row="9" Grid.Column="1" />
+
+            <!-- Show Call Button -->
+            <Label Text="Show Call Button" VerticalOptions="Center" Grid.Row="10" Grid.Column="0" />
+            <Switch x:Name="switchIsShowCallButton" HorizontalOptions="FillAndExpand" Grid.Row="10" Grid.Column="1" />
+
+            <!-- Is New -->
+            <Label Text="Is New" VerticalOptions="Center" Grid.Row="11" Grid.Column="0" />
+            <Switch x:Name="switchIsNew" HorizontalOptions="FillAndExpand" Grid.Row="11" Grid.Column="1" />
+
+            <!-- Admin Comment -->
+            <Label Text="Admin Comment" VerticalOptions="Center" Grid.Row="12" Grid.Column="0" />
+            <Entry x:Name="txtAdminComment" HorizontalOptions="FillAndExpand" Grid.Row="12" Grid.Column="1" />
+
+            <!-- Tags -->
+            <Label Text="Tags" VerticalOptions="Center" Grid.Row="13" Grid.Column="0" />
+            <Entry x:Name="txtTags" HorizontalOptions="FillAndExpand" Grid.Row="13" Grid.Column="1" />
+
+            <!-- GTIN -->
+            <Label Text="GTIN" VerticalOptions="Center" Grid.Row="14" Grid.Column="0" />
+            <Entry x:Name="txtGTIN" HorizontalOptions="FillAndExpand" Grid.Row="14" Grid.Column="1" />
+
+            <!-- Manufacture Part No -->
+            <Label Text="Manufacture Part No" VerticalOptions="Center" Grid.Row="15" Grid.Column="0" />
+            <Entry x:Name="txtManufacturePartNo" HorizontalOptions="FillAndExpand" Grid.Row="15" Grid.Column="1" />
+
+            <!-- Show On Home Page -->
+            <Label Text="Show On Home Page" VerticalOptions="Center" Grid.Row="16" Grid.Column="0" />
+            <Switch x:Name="switchIsShowOnHomePage" HorizontalOptions="FillAndExpand" Grid.Row="16" Grid.Column="1" />
+
+            <!-- Stock Item Type -->
+            <Label Text="Stock Item Type" VerticalOptions="Center" Grid.Row="17" Grid.Column="0" />
+            <Picker x:Name="pickerStockItemType" HorizontalOptions="FillAndExpand" Grid.Row="17" Grid.Column="1">
+                <Picker.Items>
+                    <x:String>Goods</x:String>
+                    <x:String>FoodItem</x:String>
+                    <x:String>Toppings</x:String>
+                    <x:String>Digital</x:String>
+                    <x:String>Download</x:String>
+                    <x:String>Voucher</x:String>
+                    <x:String>GiftCard</x:String>
+                </Picker.Items>
+            </Picker>
+
+            <!-- Is Published -->
+            <Label Text="Is Published" VerticalOptions="Center" Grid.Row="18" Grid.Column="0" />
+            <Switch x:Name="switchIsPublished" HorizontalOptions="FillAndExpand" Grid.Row="18" Grid.Column="1" />
+
+            <!-- Default Price -->
+            <Label Text="Default Price" VerticalOptions="Center" Grid.Row="19" Grid.Column="0" />
+            <Entry x:Name="txtDefaultPrice" Keyboard="Numeric" HorizontalOptions="FillAndExpand" Grid.Row="19" Grid.Column="1" />
+
+            <!-- SKU -->
+            <Label Text="SKU" VerticalOptions="Center" Grid.Row="20" Grid.Column="0" />
+            <Entry x:Name="txtSKU" HorizontalOptions="FillAndExpand" Grid.Row="20" Grid.Column="1" />
+
+            <!-- Is Featured -->
+            <Label Text="Is Featured" VerticalOptions="Center" Grid.Row="21" Grid.Column="0" />
+            <Switch x:Name="switchIsFeatured" HorizontalOptions="FillAndExpand" Grid.Row="21" Grid.Column="1" />
+
+            <!-- Is Back Order -->
+            <Label Text="Is Back Order" VerticalOptions="Center" Grid.Row="22" Grid.Column="0" />
+            <Switch x:Name="switchIsBackOrder" HorizontalOptions="FillAndExpand" Grid.Row="22" Grid.Column="1" />
+
+            <!-- Buttons -->
+            <Grid Grid.Row="23" Grid.ColumnSpan="2" Padding="10">
+                <HorizontalStackLayout HorizontalOptions="Center" Spacing="10">
+                    <Button x:Name="btnCancel" Text="Cancel" />
+                    <Button x:Name="btnSave" Text="Save" />
+                </HorizontalStackLayout>
+            </Grid>
+        </Grid>
+
+    </ScrollView>
+
+
+    
+ </ContentPage>

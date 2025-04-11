@@ -10,6 +10,7 @@ using System;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 
 
@@ -50,24 +51,28 @@ namespace Cella.Blazor
 
             var jwtSettings = appSettings.JwtSecret;
             var key = Encoding.ASCII.GetBytes(appSettings.JwtSecret);
-            services.AddAuthentication(options =>
+       services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+         .AddCookie(options =>
+        {
+            options.LoginPath = "/Account/Login";  // Path to login page
+            options.LogoutPath = "/Account/Logout";  // Path to logout
+            options.ExpireTimeSpan = TimeSpan.FromMinutes(60);  // Expiry time for cookie
+            options.SlidingExpiration = true;  // Cookie will expire after the specified time of inactivity
+        })
+        .AddJwtBearer(options =>
+        {
+            options.TokenValidationParameters = new TokenValidationParameters
             {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-                  .AddJwtBearer(options =>
-            {
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuer = true,
-                    ValidateAudience = true,
-                    ValidateLifetime = true,
-                    ValidateIssuerSigningKey = true,
-                    ValidIssuer = appSettings.Issuer,
-                    ValidAudience = appSettings.Audience,
-                    IssuerSigningKey = new SymmetricSecurityKey(key)
-                };
-            });
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidateLifetime = true,
+                ValidateIssuerSigningKey = true,
+                ValidIssuer = appSettings.Issuer,
+                ValidAudience = appSettings.Audience,
+                IssuerSigningKey = new SymmetricSecurityKey(key)
+            };
+        });
+
         }
 
         // Register application-specific middlewares (optional)

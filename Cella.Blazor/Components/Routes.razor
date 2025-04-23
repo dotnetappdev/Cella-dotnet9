@@ -1,6 +1,8 @@
 ﻿@using Cella.Blazor.Components.Account.Shared
-
-<Router AppAssembly="typeof(Program).Assembly">
+<!--AdditionalAssemblies="new[] { typeof(Cella.Components.Pages.stock.Index).Assembly }"-->
+<Router AppAssembly="typeof(Program).Assembly"
+>
+    
     <Found Context="routeData">
         <AuthorizeRouteView RouteData="routeData" DefaultLayout="typeof(Layout.MainLayout)">
             <NotAuthorized>

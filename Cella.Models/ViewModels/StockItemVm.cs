@@ -20,7 +20,7 @@ namespace Cella.Models {
         [StringLength(2000)]
         public string? ShortDescription { get; set; }
 
-        public string? Price { get; set; }
+        public decimal? Price { get; set; }
 
         public string? Name { get; set; }
         public string? FullDescription { get; set; }
@@ -32,8 +32,8 @@ namespace Cella.Models {
 
 
         public DateTime? AvailableEndDate { get; set; }
-        public bool isShowCallButton { get; set; }
-        public bool isNew { get; set; }
+        public bool? isShowCallButton { get; set; }
+        public bool? isNew { get; set; }
         [StringLength(1000)]
 
         public bool? isShowOnHomePage { get; set; }
@@ -50,6 +50,8 @@ namespace Cella.Models {
         public int? PriceList { get; set; }
         public int? PriceListType { get; set; }
         public string? SKU { get; set; }
+
+        public int? StockQty { get; set; }
         public bool? isFeatured { get; set; }
         public bool? isBackOrder { get; set; }
         public DateTime? CreateDate { get; set; }
@@ -61,6 +63,9 @@ namespace Cella.Models {
         public bool? isActive { get; set; }
 
         public bool? isDeleted { get; set; }
+
+        public bool IsActiveDisplay => isActive ?? false;
+        public bool IsDeletedDisplay => isDeleted ?? false;
 
     }
 }

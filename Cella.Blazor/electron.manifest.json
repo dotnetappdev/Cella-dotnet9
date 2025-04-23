@@ -1,0 +1,7 @@
+﻿{
+  "name": "BlazorElectronApp",
+  "version": "1.0.0",
+  "main": "wwwroot/index.html",
+  "chromium-args": "--no-sandbox",
+  "server": "https://localhost:44379/" // Ensure this matches your backend server URL
+}

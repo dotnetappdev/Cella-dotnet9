@@ -6,7 +6,13 @@ using Cella.Blazor.Components.Account;
 using Cella.Infrastructure;
 using Cella.Models;
 using Cella.Domain;
-using MudBlazor.Services;
+
+
+using Microsoft.AspNetCore.Components.Web;
+using ElectronNET.API;
+using ElectronNET.API.Entities;
+using App = Cella.Blazor.Components.App;
+using Syncfusion.Blazor;
 
 namespace Cella.Blazor;
 
@@ -15,16 +21,21 @@ public class Program
     public static async Task Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
+     
+
         var configuration = builder.Configuration;
         // Add services to the container.
+        builder.Services.AddSyncfusionBlazor();
         builder.Services.AddRazorComponents()
+            
             .AddInteractiveServerComponents();
 
         builder.Services.Configure<AppSettings>(configuration.GetSection("AppSettings"));
+        builder.Services.AddElectron();
 
-
-        builder.Services.AddMudServices();
-
+        // Ensure the Syncfusion.Blazor NuGet package is installed in your project.
+        // You can install it using the following command in the NuGet Package Manager Console:
+        // Install-Package Syncfusion.Blazor
         builder.Services.AddCascadingAuthenticationState();
         builder.Services.AddScoped<IdentityUserAccessor>();
         builder.Services.AddScoped<IdentityRedirectManager>();
@@ -74,8 +85,9 @@ public class Program
         app.UseAntiforgery();
 
         app.MapStaticAssets();
-        app.MapRazorComponents<App>()
-            .AddInteractiveServerRenderMode();
+        app.MapRazorComponents<App>().AddInteractiveServerRenderMode();
+               //.AddAdditionalAssemblies(typeof(Cella.Components.Pages.stock.Index).Assembly);
+
 
         using (var scope = app.Services.CreateScope())
         {
@@ -83,9 +95,8 @@ public class Program
             await SeedData.SeedUsersAndRoles(services);
         }
 
-
-        // Add additional endpoints required by the Identity /Account Razor components.
-        app.MapAdditionalIdentityEndpoints();
+ 
+        // Open the Electron-Window here
 
         app.Run();
     }

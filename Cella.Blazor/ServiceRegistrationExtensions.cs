@@ -5,7 +5,6 @@ using Cella.Domain;
 using Microsoft.EntityFrameworkCore;
 using Cella.Models;
 using Cella.Infrastructure;
-using Cella.Domain.Interfaces;
 using System;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
@@ -36,7 +35,6 @@ namespace Cella.Blazor
         // Register custom application services (e.g., business logic services)
         public static void AddBusinessServices(this IServiceCollection services)
         {
-            services.AddTransient<IStockInterface, StockService>();
 
 
         }

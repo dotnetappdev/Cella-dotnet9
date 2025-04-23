@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Identity;
-using Cella.Domain;
 using Microsoft.EntityFrameworkCore;
 using Cella.Models;
 using Cella.Infrastructure;
@@ -10,6 +9,7 @@ using System;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Cella.Domain.Services;
 
 
 

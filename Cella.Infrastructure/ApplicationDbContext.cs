@@ -17,7 +17,6 @@ using System.Security.Claims;
 
 using System.Threading;
 using Cella.Models;
-using Cella.Domain.Localization;
 
 namespace Cella.Infrastructure
 {
@@ -79,7 +78,6 @@ namespace Cella.Infrastructure
         public DbSet<LocaleStringResource> LocaleStringResource { get; set; }
         public DbSet<Currency> Currencies { get; set; }
 
-        public DbSet<Language> Language { get; set; }
         public DbSet<ShoppingCartItems> ShoppingCartsItems { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

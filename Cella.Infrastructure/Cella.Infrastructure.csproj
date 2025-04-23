@@ -4,6 +4,8 @@
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+	  <RootNamespace>Cella.Infrastructure</RootNamespace>
+	  <AssemblyName>Cella.Infrastructure</AssemblyName>
   </PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="6.0.0" />
@@ -35,7 +37,6 @@
 		</PackageReference>
 	</ItemGroup>
 	<ItemGroup>
-	  <ProjectReference Include="..\Cella.Domain\Cella.Domain.csproj" />
 	  <ProjectReference Include="..\Cella.Models\Cella.Models.csproj" />
 	</ItemGroup>
 </Project>

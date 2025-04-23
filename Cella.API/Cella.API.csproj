@@ -42,7 +42,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Cella.Application\Cella.Application.csproj" />
     <ProjectReference Include="..\Cella.Domain\Cella.Domain.csproj" />
     <ProjectReference Include="..\Cella.Infrastructure\Cella.Infrastructure.csproj" />
   </ItemGroup>

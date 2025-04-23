@@ -61,6 +61,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+		<PackageReference Include="ElectronNET.API" Version="23.6.2" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="9.0.60" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.4" />
 		<PackageReference Include="Syncfusion.Maui.Barcode" Version="29.1.37" />
@@ -80,7 +81,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\Cella.Application\Cella.Application.csproj" />
 	  <ProjectReference Include="..\Cella.Models\Cella.Models.csproj" />
 	</ItemGroup>
 

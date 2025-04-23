@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Razor">
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
@@ -12,17 +12,19 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Cella.Infrastructure\Cella.Infrastructure.csproj" />
     <ProjectReference Include="..\Cella.Models\Cella.Models.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Account\" />
     <Folder Include="Areas\Manage\" />
-    <Folder Include="Pages\NewFolder\" />
+    <Folder Include="NewFolder\" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="MudBlazor" Version="8.5.1" />
+	  <PackageReference Include="Microsoft.AspNetCore.Components.QuickGrid" Version="9.0.4" />
+	  <PackageReference Include="Syncfusion.Blazor" Version="29.1.39" />
   </ItemGroup>
 
 

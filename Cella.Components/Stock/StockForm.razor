@@ -1,0 +1,64 @@
+﻿@using Cella.Models
+@using Microsoft.AspNetCore.Components.Forms
+
+<EditForm Model="@Model" OnValidSubmit="OnValidSubmit">
+ 
+    <div class="row g-3">
+        <div class="col-md-6">
+            <label class="form-label">Name</label>
+            <InputText @bind-Value="Model.Name" class="form-control" />
+        </div>
+
+        <div class="col-md-6">
+            <label class="form-label">Stock Code</label>
+            <InputText @bind-Value="Model.StockCode" class="form-control" />
+        </div>
+
+        <div class="col-md-6">
+            <label class="form-label">SKU</label>
+            <InputText @bind-Value="Model.SKU" class="form-control" />
+        </div>
+
+        <div class="col-md-6">
+            <label class="form-label">Barcode</label>
+            <InputText @bind-Value="Model.BarCode" class="form-control" />
+        </div>
+
+        <div class="col-md-12">
+            <label class="form-label">Short Description</label>
+            <InputText @bind-Value="Model.ShortDescription" class="form-control" />
+        </div>
+
+        <div class="col-md-12">
+            <label class="form-label">Full Description</label>
+            <InputText @bind-Value="Model.FullDescription" class="form-control" />
+        </div>
+
+        <div class="col-md-6">
+            <label class="form-label">Default Price</label>
+            <InputNumber @bind-Value="Model.DefaultPrice" class="form-control" />
+        </div>
+
+        <div class="col-md-6">
+            <label class="form-label">Price List</label>
+            <InputNumber @bind-Value="Model.PriceList" class="form-control" />
+        </div>
+
+        <div class="col-md-6">
+            <label class="form-label">Price List Type</label>
+            <InputNumber @bind-Value="Model.PriceListType" class="form-control" />
+        </div>
+ 
+
+        <div class="col-12 mt-3">
+            <button type="submit" class="btn btn-success me-2">Save</button>
+            <button type="button" class="btn btn-secondary" @onclick="OnCancel">Cancel</button>
+        </div>
+    </div>
+</EditForm>
+
+@code {
+    [Parameter] public StockItemVm Model { get; set; } = new();
+    [Parameter] public EventCallback OnValidSubmit { get; set; }
+    [Parameter] public EventCallback OnCancel { get; set; }
+}

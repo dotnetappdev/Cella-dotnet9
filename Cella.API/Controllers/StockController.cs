@@ -1,4 +1,5 @@
 ﻿using Cella.Domain.Interfaces;
+using Cella.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections;
 
@@ -17,7 +18,7 @@ namespace Cella.API.Controllers
         }
         // GET: api/<StockController>
         [HttpGet]
-        public async Task<IEnumerable> Get()
+        public async Task<IEnumerable<StockItem>> Get()
         {
             return await _stockInterface.GetAll();
         }
@@ -31,20 +32,28 @@ namespace Cella.API.Controllers
 
         // POST api/<StockController>
         [HttpPost]
-        public void Post([FromBody]string value)
+        public void Post(StockItemVm stockItemVm)
         {
+
+               _stockInterface.PostStockItem(stockItemVm);
+
+
         }
 
         // PUT api/<StockController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        [HttpPut]
+        public void Put(StockItemVm stockItemVm)
         {
+            _stockInterface.PutStockItem(stockItemVm);
+
         }
 
         // DELETE api/<StockController>/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+           
+            _stockInterface.Delete(id);
         }
     }
 }

@@ -1,6 +1,8 @@
+Cella is a personal project I have been passionately developing during my free time outside of professional commitments. Once completed, Cella will be a full-fledged Warehouse Management System (WMS), built using the latest technologies, including .NET 9, Entity Framework Core, and SQL Server. The system is being designed to run seamlessly on Linux environments, leveraging a modern, scalable, RESTful Web API architecture as its backbone.
 
-Cella Crm is a project built upon 30 years of industry best practises and standards.
-That I have learnt allong the way in developing warehouse systems.
+With over 30 years of experience in the software development industry — including extensive expertise in the Microsoft technology stack — I’m bringing together best practices, deep architectural knowledge, and real-world insights into Cella’s design. Beyond .NET and SQL Server, the project also incorporates principles of Clean Architecture, Dependency Injection, Asynchronous Programming (async/await), and Secure API Development. I am also integrating Docker for containerization, ensuring the system remains highly portable and cloud-ready.
+
+Cella is very much a labour of love, representing both my commitment to craftsmanship and my continuous drive to stay at the forefront of modern software engineering trends. You can view the project in its current form on GitHub: 
 
 Cella Crm
 

@@ -1,5 +1,5 @@
 
-Cella Crm is a project built upon 20 years of industry best practises and standards.
+Cella Crm is a project built upon 30 years of industry best practises and standards.
 That I have learnt allong the way in developing warehouse systems.
 
 Cella Crm

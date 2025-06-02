@@ -92,6 +92,7 @@ namespace Cella.Models
         public bool? isActive { get; set; }
 
         public bool? isDeleted { get; set; }
+        public bool IsAgeRestricted { get; set; } // Indicates if this stock item is age-restricted
 
     }
 }

@@ -100,6 +100,16 @@ namespace Cella.API
                     ValidAudience = appSettings.Audience,
                     IssuerSigningKey = new SymmetricSecurityKey(key)
                 };
+            })
+            .AddGoogle(googleOptions =>
+            {
+                googleOptions.ClientId = appSettings.GoogleAuth.ClientId;
+                googleOptions.ClientSecret = appSettings.GoogleAuth.ClientSecret;
+            })
+            .AddMicrosoftAccount(microsoftOptions =>
+            {
+                microsoftOptions.ClientId = appSettings.MicrosoftAuth.ClientId;
+                microsoftOptions.ClientSecret = appSettings.MicrosoftAuth.ClientSecret;
             });
         }
 

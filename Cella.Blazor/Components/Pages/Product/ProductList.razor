@@ -1,0 +1,115 @@
+@page "/products"
+@using Cella.Models
+@inject HttpClient Http
+
+<h3>Products</h3>
+
+<div class="row mb-3">
+    <div class="col-md-3">
+        <input class="form-control" placeholder="Search..." @bind="searchTerm" @bind:event="oninput" />
+    </div>
+    <div class="col-md-3">
+        <select class="form-select" @bind="selectedCategory">
+            <option value="">All Categories</option>
+            @foreach (var cat in categories)
+            {
+                <option value="@cat">@cat</option>
+            }
+        </select>
+    </div>
+    <div class="col-md-3">
+        <select class="form-select" @bind="sortOrder">
+            <option value="name">Name</option>
+            <option value="price">Price</option>
+        </select>
+    </div>
+</div>
+
+@if (pagedProducts == null)
+{
+    <p><em>Loading...</em></p>
+}
+else if (!pagedProducts.Any())
+{
+    <p>No products found.</p>
+}
+else
+{
+    <div class="row">
+        @foreach (var product in pagedProducts)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">@product.Name</h5>
+                        <p class="card-text">@product.ShortDescription</p>
+                        <p class="card-text"><strong>@product.Price</strong></p>
+                        <button class="btn btn-success" @onclick="() => AddToBasket(product)">Add to Basket</button>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <nav aria-label="Product pagination" class="d-flex justify-content-center mt-3">
+        <ul class="pagination">
+            <li class="page-item @(page == 1 ? "disabled" : null)">
+                <button class="page-link" @onclick="PrevPage">Previous</button>
+            </li>
+            @for (int i = 1; i <= totalPages; i++)
+            {
+                <li class="page-item @(page == i ? "active" : null)">
+                    <button class="page-link" @onclick="() => GoToPage(i)">@i</button>
+                </li>
+            }
+            <li class="page-item @(page == totalPages ? "disabled" : null)">
+                <button class="page-link" @onclick="NextPage">Next</button>
+            </li>
+        </ul>
+    </nav>
+}
+
+@code {
+    private List<StockItem> products;
+    private List<StockItem> pagedProducts;
+    private List<string> categories = new();
+    private string searchTerm = string.Empty;
+    private string selectedCategory = string.Empty;
+    private string sortOrder = "name";
+    private int page = 1;
+    private int pageSize = 9;
+    private int totalPages = 1;
+
+    protected override async Task OnInitializedAsync()
+    {
+        products = await Http.GetFromJsonAsync<List<StockItem>>("api/products/sample");
+        categories = products.Select(p => p.Categories?.ToString()).Distinct().Where(c => !string.IsNullOrEmpty(c)).ToList();
+        ApplyFilters();
+    }
+
+    private void ApplyFilters()
+    {
+        IEnumerable<StockItem> filtered = products;
+        if (!string.IsNullOrWhiteSpace(searchTerm))
+            filtered = filtered.Where(p => p.Name.Contains(searchTerm, StringComparison.OrdinalIgnoreCase));
+        if (!string.IsNullOrWhiteSpace(selectedCategory))
+            filtered = filtered.Where(p => p.Categories?.ToString() == selectedCategory);
+        filtered = sortOrder == "price"
+            ? filtered.OrderBy(p => decimal.TryParse(p.Price, out var price) ? price : 0)
+            : filtered.OrderBy(p => p.Name);
+        int count = filtered.Count();
+        totalPages = Math.Max(1, (int)Math.Ceiling(count / (double)pageSize));
+        if (page > totalPages) page = totalPages;
+        if (page < 1) page = 1;
+        pagedProducts = filtered.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+    }
+    private void AddToBasket(StockItem product)
+    {
+        // TODO: Add to basket logic (local storage or state)
+    }
+    private void PrevPage() { if (page > 1) { page--; ApplyFilters(); } }
+    private void NextPage() { if (page < totalPages) { page++; ApplyFilters(); } }
+    private void GoToPage(int p) { if (p != page) { page = p; ApplyFilters(); } }
+    private void OnSearchChanged(ChangeEventArgs e) { searchTerm = e.Value?.ToString(); ApplyFilters(); }
+    private void OnCategoryChanged(ChangeEventArgs e) { selectedCategory = e.Value?.ToString(); ApplyFilters(); }
+    private void OnSortChanged(ChangeEventArgs e) { sortOrder = e.Value?.ToString(); ApplyFilters(); }
+}

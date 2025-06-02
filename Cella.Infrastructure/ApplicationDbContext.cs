@@ -65,6 +65,7 @@ namespace Cella.Infrastructure
         public DbSet<StaffMembers> StaffMember { get; set; }
 
 
+        public DbSet<Customer> Customers { get; set; }
 
         public DbSet<CustomFieldsForModels> CustomFields { get; set; }
 
@@ -72,6 +73,8 @@ namespace Cella.Infrastructure
 
         public DbSet<SalesOrder> SalesOrders { get; set; }
          public DbSet<SalesOrderItem> SalesOrderItems { get; set; }
+        public DbSet<SalesOrderLine> SalesOrderLines { get; set; }
+        public DbSet<BillOfMaterials> BillOfMaterials { get; set; }
 
         public DbSet<ShoppingCart> ShoppingCarts { get; set; }
         public DbSet<Categories> Categories { get; set; }

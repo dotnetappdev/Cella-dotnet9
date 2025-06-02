@@ -1,0 +1,78 @@
+@using Microsoft.AspNetCore.Components.Forms
+@using Cella.Models
+@inject HttpClient Http
+
+@if (IsOpen)
+{
+    <div class="modal show d-block" tabindex="-1" style="background:rgba(0,0,0,0.5);">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Assign Driver to Sales Order</h5>
+                    <button type="button" class="btn-close" @onclick="Close" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <EditForm Model="assignRequest" OnValidSubmit="AssignDriverAsync">
+                        <DataAnnotationsValidator />
+                        <ValidationSummary />
+                        <div class="mb-3">
+                            <label class="form-label">Order Id</label>
+                            <InputNumber class="form-control" @bind-Value="assignRequest.OrderId" disabled />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Driver (auto-selected by postcode)</label>
+                            <InputText class="form-control" @bind-Value="driverName" disabled />
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-primary" type="submit">Assign</button>
+                            <button class="btn btn-secondary" type="button" @onclick="Close">Cancel</button>
+                        </div>
+                    </EditForm>
+                    @if (!string.IsNullOrEmpty(errorMessage))
+                    {
+                        <div class="alert alert-danger mt-2">@errorMessage</div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter] public EventCallback OnDriverAssigned { get; set; }
+    private bool IsOpen { get; set; }
+    private AssignDriverRequest assignRequest = new AssignDriverRequest();
+    private string driverName;
+    private string errorMessage;
+    public void Open(int orderId)
+    {
+        assignRequest = new AssignDriverRequest { OrderId = orderId };
+        driverName = string.Empty;
+        errorMessage = null;
+        IsOpen = true;
+        StateHasChanged();
+    }
+    private void Close()
+    {
+        IsOpen = false;
+        StateHasChanged();
+    }
+    private async Task AssignDriverAsync()
+    {
+        var response = await Http.PostAsJsonAsync("api/driverassignment/assign-driver", assignRequest);
+        if (response.IsSuccessStatusCode)
+        {
+            var result = await response.Content.ReadFromJsonAsync<AssignDriverResult>();
+            driverName = result.DriverName;
+            if (OnDriverAssigned.HasDelegate)
+                await OnDriverAssigned.InvokeAsync();
+            IsOpen = false;
+        }
+        else
+        {
+            errorMessage = await response.Content.ReadAsStringAsync();
+        }
+    }
+    public class AssignDriverRequest { public int OrderId { get; set; } }
+    public class AssignDriverResult { public int DriverId { get; set; } public string DriverName { get; set; } }
+}

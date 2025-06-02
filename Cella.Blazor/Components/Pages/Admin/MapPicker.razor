@@ -1,0 +1,39 @@
+@using Microsoft.JSInterop
+@inject IJSRuntime JS
+
+<div class="mb-2">
+    <div id="map" style="height: 350px; width: 100%; border-radius: 8px;"></div>
+</div>
+<div class="row g-2">
+    <div class="col">
+        <label>Latitude</label>
+        <InputNumber class="form-control" @bind-Value="Latitude" />
+    </div>
+    <div class="col">
+        <label>Longitude</label>
+        <InputNumber class="form-control" @bind-Value="Longitude" />
+    </div>
+</div>
+
+@code {
+    [Parameter] public decimal? Latitude { get; set; }
+    [Parameter] public decimal? Longitude { get; set; }
+    [Parameter] public EventCallback<(decimal?, decimal?)> OnChanged { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JS.InvokeVoidAsync("initMapPicker", DotNetObjectReference.Create(this), Latitude, Longitude);
+        }
+    }
+
+    [JSInvokable]
+    public async Task OnMapClicked(decimal lat, decimal lng)
+    {
+        Latitude = lat;
+        Longitude = lng;
+        await OnChanged.InvokeAsync((lat, lng));
+        StateHasChanged();
+    }
+}

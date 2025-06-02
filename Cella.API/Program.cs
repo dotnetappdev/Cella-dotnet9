@@ -1,4 +1,3 @@
-
 using Cella.Infrastructure;
 using Cella.Models;
 using Microsoft.AspNetCore.Http;
@@ -45,6 +44,7 @@ namespace Cella.API
 
             app.UseHttpsRedirection();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
 

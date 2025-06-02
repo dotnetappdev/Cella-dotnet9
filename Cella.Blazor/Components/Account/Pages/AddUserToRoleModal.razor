@@ -1,0 +1,86 @@
+@page "/assign-user-role"
+@using Microsoft.AspNetCore.Identity
+@using Cella.Models
+
+@inject UserManager<ApplicationUser> UserManager
+@inject RoleManager<IdentityRole> RoleManager
+
+@if (IsOpen)
+{
+    <div class="modal show d-block" tabindex="-1" style="background:rgba(0,0,0,0.5);">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add User to Role</h5>
+                    <button type="button" class="btn-close" @onclick="Close" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">User</label>
+                        <select class="form-select" @bind="SelectedUserId">
+                            <option value="">Select a user</option>
+                            @foreach (var user in Users)
+                            {
+                                <option value="@user.Id">@user.UserName (@user.Email)</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Role</label>
+                        <select class="form-select" @bind="SelectedRole">
+                            <option value="">Select a role</option>
+                            @foreach (var role in Roles)
+                            {
+                                <option value="@role.Name">@role.Name</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" @onclick="AssignRole" disabled="@(string.IsNullOrEmpty(SelectedUserId) || string.IsNullOrEmpty(SelectedRole))">Save</button>
+                    <button class="btn btn-secondary" @onclick="Close">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    private bool IsOpen { get; set; }
+    private List<ApplicationUser> Users = new();
+    private List<IdentityRole> Roles = new();
+    private string SelectedUserId { get; set; }
+    private string SelectedRole { get; set; }
+
+    public async Task Open()
+    {
+        Users = await UserManager.Users.ToListAsync();
+        Roles = RoleManager.Roles.ToList();
+        SelectedUserId = null;
+        SelectedRole = null;
+        IsOpen = true;
+        StateHasChanged();
+    }
+    private void Close()
+    {
+        IsOpen = false;
+        StateHasChanged();
+    }
+    private async Task AssignRole()
+    {
+        if (!string.IsNullOrEmpty(SelectedUserId) && !string.IsNullOrEmpty(SelectedRole))
+        {
+            var user = await UserManager.FindByIdAsync(SelectedUserId);
+            if (user != null)
+            {
+                await UserManager.AddToRoleAsync(user, SelectedRole);
+                // Optionally, show a success message
+            }
+        }
+        IsOpen = false;
+        StateHasChanged();
+        if (OnUserRoleAdded.HasDelegate)
+            await OnUserRoleAdded.InvokeAsync();
+    }
+    [Parameter] public EventCallback OnUserRoleAdded { get; set; }
+}

@@ -1,0 +1,55 @@
+@using Microsoft.AspNetCore.Components.Routing
+
+<nav class="nav flex-column admin-nav">
+    <div class="nav-item px-3">
+        <NavLink class="nav-link" href="/admin/dashboard" Match="NavLinkMatch.All">
+            <span class="bi bi-speedometer2" aria-hidden="true"></span> Dashboard
+        </NavLink>
+    </div>
+    <div class="nav-item px-3">
+        <NavLink class="nav-link" href="/admin/stock-list" Match="NavLinkMatch.All">
+            <span class="bi bi-box-seam" aria-hidden="true"></span> Stock List
+        </NavLink>
+    </div>
+    <div class="nav-item px-3">
+        <NavLink class="nav-link" href="/admin/stock-check">
+            <span class="bi bi-search" aria-hidden="true"></span> Stock Check
+        </NavLink>
+    </div>
+    <div class="nav-item px-3">
+        <NavLink class="nav-link" href="/admin/salesorders">
+            <span class="bi bi-receipt" aria-hidden="true"></span> Sales Orders
+        </NavLink>
+    </div>
+    <div class="nav-item px-3">
+        <NavLink class="nav-link" href="/admin/drivers">
+            <span class="bi bi-truck" aria-hidden="true"></span> Drivers
+        </NavLink>
+    </div>
+    <div class="nav-item px-3">
+        <NavLink class="nav-link" href="/admin/routes">
+            <span class="bi bi-geo-alt" aria-hidden="true"></span> Routes
+        </NavLink>
+    </div>
+    <div class="nav-item px-3">
+        <NavLink class="nav-link" href="/admin/weighbridge">
+            <span class="bi bi-truck-flatbed" aria-hidden="true"></span> Weigh Bridge
+        </NavLink>
+    </div>
+    <div class="nav-item px-3">
+        <NavLink class="nav-link" href="/admin/billofmaterials">
+            <span class="bi bi-list-check" aria-hidden="true"></span> Bill of Materials
+        </NavLink>
+    </div>
+    <div class="nav-item px-3">
+        <NavLink class="nav-link" href="/admin/stock">
+            <span class="bi bi-archive" aria-hidden="true"></span> Stock
+        </NavLink>
+    </div>
+    <div class="nav-item px-3">
+        <NavLink class="nav-link" href="/admin/pick-list">
+            <span class="bi bi-list-ul" aria-hidden="true"></span> Pick List
+        </NavLink>
+    </div>
+    <!-- Add more admin navigation links here if needed -->
+</nav>

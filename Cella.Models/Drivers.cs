@@ -23,6 +23,8 @@ namespace Cella.Models {
         public string? LastName { get; set; }
        public int? CurrentStop { get; set; }
        public int? TotalStops { get; set; }
+       public string? RouteStatus { get; set; } // e.g. OnRoute, Waiting, Completed
+       public string? LastKnownLocation { get; set; } // e.g. GPS or address
 
        public DateTime CreateDate { get; set; }
 

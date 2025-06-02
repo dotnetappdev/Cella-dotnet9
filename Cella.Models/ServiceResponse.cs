@@ -11,7 +11,7 @@ namespace Cella.Models
         public T Data { get; private set; }
         public bool Success { get; private set; }
         public string Message { get; private set; }
-        public string? ErrorCode { get; private set; }
+        public int? ErrorCode { get; private set; }
         public string ExceptionMessage { get; private set; }
 
         [System.Text.Json.Serialization.JsonIgnore]

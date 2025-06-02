@@ -8,7 +8,12 @@ namespace Cella.Models
 {
     public class Customer
     {
-
+        public enum TypeOfCustomer
+        {
+            Customer = 1,
+            Driver = 2,
+            Agent = 3
+        }
         public int Id { get; set; }
         public Guid? StoreId { get; set; }
 
@@ -22,6 +27,8 @@ namespace Cella.Models
         public string DailingCountryCode { get; set; }
 
         public string MobileNumber { get; set; }
+
+        public TypeOfCustomer CustomerType { get; set; } // Added enum property
 
         public bool isBusinessMobile { get; set; }
 
@@ -44,7 +51,8 @@ namespace Cella.Models
         public bool isActive { get; set; }
 
         public bool isDeleted { get; set; }
-
-
+        public string GpsLocation { get; set; } // GPS coordinates from postcode
+        public int? StopsUntilThisStop { get; set; } // Feedback: stops until their stop
+        public int? RouteId { get; set; } // Link to route
     }
 }

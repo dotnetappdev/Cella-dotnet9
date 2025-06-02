@@ -20,7 +20,7 @@ namespace Cella.API.Controllers
         [HttpGet]
         public async Task<IEnumerable<StockItem>> Get()
         {
-            return await _stockInterface.GetAll();
+            return (IEnumerable<StockItem>)await _stockInterface.GetAll();
         }
 
         // GET api/<StockController>/5

@@ -44,6 +44,9 @@ namespace Cella.Models {
 
         public string   CreatedBy { get; set; }
 
-        
+        public int? CustomerId { get; set; } // Link to Customer
+        public int? DriverId { get; set; } // Link to Driver
+
+        public string? LastStopLocation { get; set; } // Last stop location for driver tracking
     }
 }

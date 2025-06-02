@@ -1,0 +1,139 @@
+@page "/admin/routes"
+@layout AdminLayout
+@using Cella.Models
+@using Cella.Blazor.Components.Pages.Admin
+@inject HttpClient Http
+
+<h3>Manage Routes</h3>
+
+<button class="btn btn-primary mb-2" @onclick="ShowAddRouteModal">Add Route</button>
+
+@if (routes == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Route Id</th>
+                <th>From</th>
+                <th>Destination</th>
+                <th>Stops</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var route in pagedRoutes)
+            {
+                <tr>
+                    <td>@route.Id</td>
+                    <td>@route.From</td>
+                    <td>@route.Destination</td>
+                    <td>@route.Stops</td>
+                    <td>
+                        <!-- Add route actions here -->
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <nav aria-label="Routes pagination" class="d-flex justify-content-center mt-3">
+        <ul class="pagination">
+            <li class="page-item @(page == 1 ? "disabled" : null)">
+                <button class="page-link" @onclick="PrevPage">Previous</button>
+            </li>
+            @for (int i = 1; i <= totalPages; i++)
+            {
+                <li class="page-item @(page == i ? "active" : null)">
+                    <button class="page-link" @onclick="() => GoToPage(i)">@i</button>
+                </li>
+            }
+            <li class="page-item @(page == totalPages ? "disabled" : null)">
+                <button class="page-link" @onclick="NextPage">Next</button>
+            </li>
+        </ul>
+    </nav>
+}
+
+<EditForm Model="newRoute" OnValidSubmit="AddRoute" class="mb-4">
+    <div class="card">
+        <div class="card-header">Add New Route</div>
+        <div class="card-body">
+            <div class="mb-3">
+                <label>From</label>
+                <InputText class="form-control" @bind-Value="newRoute.From" />
+            </div>
+            <div class="mb-3">
+                <label>Destination</label>
+                <InputText class="form-control" @bind-Value="newRoute.Destination" />
+            </div>
+            <div class="mb-3">
+                <label>Stops</label>
+                <InputNumber class="form-control" @bind-Value="newRoute.Stops" />
+            </div>
+            <div class="mb-3">
+                <label>Pick Location on Map</label>
+                <MapPicker Latitude="@newRoute.Lattitude" Longitude="@newRoute.Longitutde" OnChanged="OnMapChanged" />
+            </div>
+            <div class="row g-2">
+                <div class="col">
+                    <label>Latitude</label>
+                    <InputNumber class="form-control" @bind-Value="newRoute.Lattitude" />
+                </div>
+                <div class="col">
+                    <label>Longitude</label>
+                    <InputNumber class="form-control" @bind-Value="newRoute.Longitutde" />
+                </div>
+            </div>
+            <button type="submit" class="btn btn-success mt-3">Add Route</button>
+        </div>
+    </div>
+</EditForm>
+
+@code {
+    private List<DriverRoutes> routes;
+    private List<DriverRoutes> pagedRoutes = new();
+    private int page = 1;
+    private int pageSize = 10;
+    private int totalPages = 1;
+    private DriverRoutes newRoute = new DriverRoutes();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadRoutes();
+    }
+
+    private async Task LoadRoutes()
+    {
+        routes = await Http.GetFromJsonAsync<List<DriverRoutes>>("api/routes");
+        ApplyPagination();
+        StateHasChanged();
+    }
+
+    private void ApplyPagination()
+    {
+        int count = routes?.Count ?? 0;
+        totalPages = Math.Max(1, (int)Math.Ceiling(count / (double)pageSize));
+        if (page > totalPages) page = totalPages;
+        if (page < 1) page = 1;
+        pagedRoutes = routes?.Skip((page - 1) * pageSize).Take(pageSize).ToList() ?? new List<DriverRoutes>();
+    }
+    private void PrevPage() { if (page > 1) { page--; ApplyPagination(); } }
+    private void NextPage() { if (page < totalPages) { page++; ApplyPagination(); } }
+    private void GoToPage(int p) { if (p != page) { page = p; ApplyPagination(); } }
+    private void ShowAddRouteModal() { /* Show modal logic if needed */ }
+    private async Task AddRoute()
+    {
+        // Add route logic, including coordinates
+        await Http.PostAsJsonAsync("api/routes", newRoute);
+        await LoadRoutes();
+        newRoute = new DriverRoutes();
+    }
+    private void OnMapChanged((decimal? lat, decimal? lng) coords)
+    {
+        newRoute.Lattitude = coords.lat;
+        newRoute.Longitutde = coords.lng;
+    }
+}

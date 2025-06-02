@@ -1,0 +1,68 @@
+@page "/basket"
+@using Cella.Models
+@inject HttpClient Http
+
+<h3>Shopping Basket</h3>
+
+@if (basketItems == null || !basketItems.Any())
+{
+    <p>Your basket is empty.</p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Qty</th>
+                <th>Price</th>
+                <th>Total</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in basketItems)
+            {
+                <tr>
+                    <td>@item.Product.Name</td>
+                    <td><input type="number" min="1" value="@item.Quantity" @onchange="e => UpdateQty(item, e)" /></td>
+                    <td>@item.Product.Price</td>
+                    <td>@(decimal.TryParse(item.Product.Price, out var price) ? (price * item.Quantity).ToString("C") : "-")</td>
+                    <td><button class="btn btn-danger btn-sm" @onclick="() => RemoveFromBasket(item)">Remove</button></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div class="text-end">
+        <strong>Total: @TotalPrice</strong>
+    </div>
+    <button class="btn btn-success mt-3" @onclick="Checkout">Checkout</button>
+}
+
+@code {
+    private List<BasketItem> basketItems = new();
+    private decimal TotalPrice => basketItems.Sum(i => decimal.TryParse(i.Product.Price, out var price) ? price * i.Quantity : 0);
+
+    protected override void OnInitialized()
+    {
+        // TODO: Load basket from local storage or state
+    }
+    private void UpdateQty(BasketItem item, ChangeEventArgs e)
+    {
+        if (int.TryParse(e.Value?.ToString(), out var qty) && qty > 0)
+            item.Quantity = qty;
+    }
+    private void RemoveFromBasket(BasketItem item)
+    {
+        basketItems.Remove(item);
+    }
+    private void Checkout()
+    {
+        // TODO: Implement checkout logic
+    }
+    public class BasketItem
+    {
+        public StockItem Product { get; set; }
+        public int Quantity { get; set; } = 1;
+    }
+}

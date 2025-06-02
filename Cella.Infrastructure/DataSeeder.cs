@@ -11,7 +11,7 @@ namespace Cella.Infrastructure
             var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
             // 1. Define roles
-            string[] roles = new[] { "Admin", "User", "Owner", "ReadOnly", "Write" };
+            string[] roles = new[] { "Admin", "User", "Owner", "ReadOnly", "Write", "Agent" };
 
             // 2. Create roles if they don't exist
             foreach (var role in roles)
@@ -30,7 +30,8 @@ namespace Cella.Infrastructure
             ("manager@example.com", "Manager123!", new[] { "Admin", "Write" }),
             ("owner@example.com", "Owner123!", new[] { "Owner" }),
             ("readonly@example.com", "ReadOnly123!", new[] { "ReadOnly" }),
-            ("contributor@example.com", "Contributor123!", new[] { "Write", "ReadOnly" })
+            ("contributor@example.com", "Contributor123!", new[] { "Write", "ReadOnly" }),
+            ("agent@example.com", "Agent123!", new[] { "Agent" })
         };
 
             // 4. Create users and assign roles
@@ -58,6 +59,11 @@ namespace Cella.Infrastructure
                     }
                 }
             }
+
+            // When seeding StockItems, set IsAgeRestricted as needed, e.g.:
+            // new StockItem { ..., IsAgeRestricted = true, ... }
+            // When seeding SalesOrders, set OtpCode as needed, e.g.:
+            // new SalesOrder { ..., OtpCode = "123456", ... }
         }
     }
 

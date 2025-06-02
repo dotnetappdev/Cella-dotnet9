@@ -1,0 +1,143 @@
+@page "/customer/dashboard"
+@using Cella.Models
+@inject HttpClient Http
+@inject NavigationManager Navigation
+@using Microsoft.JSInterop
+
+<h3>Customer Dashboard</h3>
+
+<div>
+    <ul class="nav nav-tabs mb-3" id="customerTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="orders-tab" data-bs-toggle="tab" data-bs-target="#orders" type="button" role="tab">Orders</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="delivery-tab" data-bs-toggle="tab" data-bs-target="#delivery" type="button" role="tab">Delivery</button>
+        </li>
+    </ul>
+    <div class="tab-content" id="customerTabsContent">
+        <div class="tab-pane fade show active" id="orders" role="tabpanel">
+            @if (orders == null)
+            {
+                <p><em>Loading your sales orders...</em></p>
+            }
+            else if (!orders.Any())
+            {
+                <p>You have no sales orders.</p>
+            }
+            else
+            {
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Order #</th>
+                            <th>Date</th>
+                            <th>Total</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var order in orders)
+                        {
+                            <tr>
+                                <td>@order.Id</td>
+                                <td>@order.CreatedOn?.ToString("yyyy-MM-dd")</td>
+                                <td>@order.OrderTotal?.ToString("C")</td>
+                                <td>@order.OrderType</td>
+                                <td>
+                                    <button class="btn btn-sm btn-primary" @onclick="() => PrintOrderPdf(order.Id)">Print PDF</button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+        </div>
+        <div class="tab-pane fade" id="delivery" role="tabpanel">
+            @if (orders == null || !orders.Any())
+            {
+                <p>No deliveries scheduled.</p>
+            }
+            else
+            {
+                @foreach (var order in orders)
+                {
+                    <div class="card mb-3">
+                        <div class="card-header">
+                            Delivery for Order #@order.Id
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div id="map-order-@order.Id" style="height: 250px; width: 100%; border-radius: 8px;"></div>
+                                </div>
+                                <div class="col-md-6">
+                                    <p><strong>Estimated Delivery Time:</strong> @GetEstimatedDeliveryTime(order)</p>
+                                    <p><strong>Delivery OTP:</strong> <span class="badge bg-success">@GetOtpForOrder(order.Id)</span></p>
+                                    <p><strong>Status:</strong> @order.OrderType</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>
+
+@code {
+    private List<SalesOrder> orders;
+    private Dictionary<int, string> orderOtps = new();
+    [Inject] IJSRuntime JS { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        orders = await Http.GetFromJsonAsync<List<SalesOrder>>("api/salesorders");
+        GenerateOtps();
+    }
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender && orders != null)
+        {
+            foreach (var order in orders)
+            {
+                // You would replace this with a real map integration (e.g., Leaflet, Google Maps)
+                await JS.InvokeVoidAsync("initOrderMap", $"map-order-{order.Id}", order.Id);
+            }
+        }
+    }
+    private void PrintOrderPdf(int orderId)
+    {
+        var url = $"api/salesorders/{orderId}/pdf";
+        Navigation.NavigateTo(url, true);
+    }
+    private string GetEstimatedDeliveryTime(SalesOrder order)
+    {
+        // Placeholder: In real app, use actual delivery ETA from backend/route
+        return order.CreatedOn?.AddDays(1).ToString("yyyy-MM-dd HH:mm") ?? "TBD";
+    }
+    private void GenerateOtps()
+    {
+        if (orders == null) return;
+        var rng = new Random();
+        foreach (var order in orders)
+        {
+            if (!orderOtps.ContainsKey(order.Id))
+                orderOtps[order.Id] = rng.Next(100000, 999999).ToString();
+        }
+    }
+    private string GetOtpForOrder(int orderId)
+    {
+        if (orderOtps.TryGetValue(orderId, out var otp))
+            return otp;
+        return "------";
+    }
+}
+
+<style>
+.nav-tabs .nav-link.active {
+    background: #f8f9fa;
+    border-bottom: 2px solid #007bff;
+}
+</style>

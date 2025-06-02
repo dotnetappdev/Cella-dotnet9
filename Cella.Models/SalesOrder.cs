@@ -75,6 +75,8 @@ namespace Cella.Models {
         public bool? isDeleted { get; set; }
 
         public List<SalesOrderItem> Items { get; set; }
+        public List<SalesOrderLine> Lines { get; set; } = new();
+        public string? OtpCode { get; set; }
 
     }
 }

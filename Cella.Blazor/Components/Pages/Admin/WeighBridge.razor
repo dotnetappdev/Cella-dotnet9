@@ -1,0 +1,104 @@
+@page "/admin/weighbridge"
+@using Cella.Models
+@inject HttpClient Http
+
+<h3>Weigh Bridge Entries</h3>
+
+<button class="btn btn-primary mb-3" @onclick="ShowAddModal">Add Entry</button>
+
+@if (entries == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Lorry Type</th>
+                <th>Registration</th>
+                <th>Load Weight (kg)</th>
+                <th>Entry Time</th>
+                <th>Notes</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var entry in entries)
+            {
+                <tr>
+                    <td>@entry.LorryType</td>
+                    <td>@entry.LorryRegistration</td>
+                    <td>@entry.LoadWeight</td>
+                    <td>@entry.EntryTime.ToString("g")</td>
+                    <td>@entry.Notes</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@if (showAddModal)
+{
+    <div class="modal show d-block" tabindex="-1" style="background:rgba(0,0,0,0.5);">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Weigh Bridge Entry</h5>
+                    <button type="button" class="btn-close" @onclick="HideAddModal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <EditForm Model="newEntry" OnValidSubmit="AddEntryAsync">
+                        <DataAnnotationsValidator />
+                        <ValidationSummary />
+                        <div class="mb-3">
+                            <label class="form-label">Lorry Type</label>
+                            <InputText class="form-control" @bind-Value="newEntry.LorryType" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Lorry Registration</label>
+                            <InputText class="form-control" @bind-Value="newEntry.LorryRegistration" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Load Weight (kg)</label>
+                            <InputNumber class="form-control" @bind-Value="newEntry.LoadWeight" />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Notes</label>
+                            <InputText class="form-control" @bind-Value="newEntry.Notes" />
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-success" type="submit">Add</button>
+                            <button class="btn btn-secondary" type="button" @onclick="HideAddModal">Cancel</button>
+                        </div>
+                    </EditForm>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    private List<WeighBridgeEntry> entries;
+    private bool showAddModal = false;
+    private WeighBridgeEntry newEntry = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadEntries();
+    }
+    private async Task LoadEntries()
+    {
+        entries = await Http.GetFromJsonAsync<List<WeighBridgeEntry>>("api/weighbridge");
+    }
+    private void ShowAddModal() { newEntry = new(); showAddModal = true; }
+    private void HideAddModal() { showAddModal = false; }
+    private async Task AddEntryAsync()
+    {
+        var resp = await Http.PostAsJsonAsync("api/weighbridge", newEntry);
+        if (resp.IsSuccessStatusCode)
+        {
+            showAddModal = false;
+            await LoadEntries();
+        }
+    }
+}

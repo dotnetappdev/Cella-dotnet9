@@ -4,6 +4,16 @@ using System.Text;
 
 namespace Cella.Models
 {
+    public class GoogleAuthSettings
+    {
+        public string ClientId { get; set; }
+        public string ClientSecret { get; set; }
+    }
+    public class MicrosoftAuthSettings
+    {
+        public string ClientId { get; set; }
+        public string ClientSecret { get; set; }
+    }
     public class AppSettings
     {
         public string JwtSecret { get; set; } = string.Empty;
@@ -14,7 +24,10 @@ namespace Cella.Models
         public int ExpirationInMinutes { get; set; } = 0;
         public Dictionary<string, string> ConnectionStrings { get; set; } = new();
   
-      public string GetDefaultConnection()
+        public GoogleAuthSettings GoogleAuth { get; set; }
+        public MicrosoftAuthSettings MicrosoftAuth { get; set; }
+
+        public string GetDefaultConnection()
         {
             return this.ConnectionStrings["DefaultConnection"];
         }
